@@ -5,14 +5,14 @@
 --- }
 
 
-local RandomString = require("RandomString")
+local random_string = require("random_string")
 
 local private = setmetatable({}, { __mode = "k" })
 
 local ENUM_ID_LENGTH = 8
 local EnumIdGenerator
 EnumIdGenerator = function()
-    local id = RandomString.SimpleRandom(ENUM_ID_LENGTH)
+    local id = random_string.SimpleRandom(ENUM_ID_LENGTH)
     if not private[id] then
         return id
     end
