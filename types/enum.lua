@@ -5,7 +5,7 @@
 --- }
 
 
-local random_string = require("random_string")
+local random_string = require("utils.random_string")
 
 local private = setmetatable({}, { __mode = "k" })
 

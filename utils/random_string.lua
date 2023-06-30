@@ -1,11 +1,11 @@
-local time = require("time")
+local time = require("utils.time")
 
 local random_string = {}
 
-local DEFAULT_CHARACTERS = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 
-                             'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 
-                             'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 
-                             'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 
+local DEFAULT_CHARACTERS = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
+                             'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+                             'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N',
+                             'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
                              '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' }
 local DEFAULT_CHARACTERS_AMOUNT = #DEFAULT_CHARACTERS
 
@@ -49,7 +49,7 @@ local RandomPartMax = 2 ^ RandomPartLength - 1
 function random_string.SnowFlake(machineId)
     local timestamp = time.GetTimestampInMillisecond()
     local random = math.random(0, RandomPartMax)
-    local ret = (timestamp  << (MachineIdLength + RandomPartLength)) + 
+    local ret = (timestamp  << (MachineIdLength + RandomPartLength)) +
                 (machineId << RandomPartLength) + random
     return string.format("%16x", ret)
 end
