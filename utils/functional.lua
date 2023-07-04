@@ -1,5 +1,6 @@
 local type = type
 local getmetatable = getmetatable
+local ipairs, pairs = iparis, pairs
 local tinsert = table.insert
 local math = math
 
@@ -110,5 +111,143 @@ function functional.drop(count, array)
 end
 --endregion Table
 
+function functional.contain(table, value)
+    for _, v in ipairs(table) do
+        if v == value then return true end
+    end
+end
+
+function functional.where(table, value)
+    for i, v in ipairs(table) do
+        if v == value then return i end
+    end
+end
+
+function functional.all(array)
+    for _, v in ipairs(array) do
+        if not v then return false end
+    end
+    return true
+end
+
+function functional.any(array)
+    for _, v in ipairs(array) do
+        if v then return true end
+    end
+    return false
+end
+
+function functional.none(array)
+    for _, v in ipairs(array) do
+        if v then return false end
+    end
+    return true
+end
+
+function functional.mininum(array)
+    local len = #array
+    if len > 1 then
+        local min = array[1]
+        for i = 2, len do
+            if array[i] < min then
+                min = array[i]
+            end
+        end
+        return min
+    elseif len == 1 then
+        return array[1]
+    end
+end
+
+function functional.maxinum(array)
+    local len = #array
+    if len > 1 then
+        local max = array[1]
+        for i = 2, len do
+            if array[i] > max then
+                max = array[i]
+            end
+        end
+        return max
+    elseif len == 1 then
+        return array[1]
+    end
+end
+
+function functional.sum(array)
+    local ret = 0
+    for _, v in ipairs(array) do
+        ret = ret + v
+    end
+    return ret
+end
+
+function functional.product(array)
+    local ret = #array > 0 and 1 or 0
+    for _, v in ipairs(array) do
+        ret = ret * v
+    end
+    return ret
+end
+
+function functional.merge(tab, addon)
+    for _, v in ipairs(addon) do
+        tinsert(tab, v)
+    end
+end
+
+function functional.repeats(count, value)
+    local ret = {}
+    for _ = 1, count do
+        tinsert(ret, value)
+    end
+    return ret
+end
+
+function functional.cycles(count, array)
+    local ret = {}
+    for _ = 1, count do
+        functional.merge(ret, array)
+    end
+    return ret
+end
+
+function functional.map(array, func)
+    local ret = {}
+    for i, v in ipairs(array) do
+        ret[i] = func(v)
+    end
+    return ret
+end
+
+function functional.filter(array, func)
+    local ret = {}
+    for _, v in ipairs(array) do
+        if func(v) then
+            tinsert(ret, v)
+        end
+    end
+    return ret
+end
+
+function functional.reduce(array, func, state)
+    for _, v in ipairs(array) do
+        state = func(state, v)
+    end
+    return state
+end
+
+function functional.reverse_ipairs(array)
+    local iter = function(array, index)
+        index = index - 1
+        local value = array[index]
+        if value then
+            return index, value
+        end
+    end
+
+    local cnt = #array + 1
+    return iter, array, cnt
+end
 
 return functional
