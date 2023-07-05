@@ -111,14 +111,14 @@ function functional.drop(count, array)
 end
 --endregion Table
 
-function functional.contain(table, value)
-    for _, v in ipairs(table) do
+function functional.contain(array, value)
+    for _, v in ipairs(array) do
         if v == value then return true end
     end
 end
 
-function functional.where(table, value)
-    for i, v in ipairs(table) do
+function functional.where(array, value)
+    for i, v in ipairs(array) do
         if v == value then return i end
     end
 end
