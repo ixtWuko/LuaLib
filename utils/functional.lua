@@ -250,4 +250,28 @@ function functional.reverse_ipairs(array)
     return iter, array, cnt
 end
 
+
+---@param f function
+---@param g function
+function functional.compose(f, g)
+    return function(...)
+        return f(g(...))
+    end
+end
+
+---@param f function
+function functional.curry(f, ...)
+    local params = { ... }
+    local paramsLen = #params
+    return function(...)
+        local addParams = { ... }
+        local addParamsLen = #addParams
+        table.move(addParams, 1, addParamsLen, paramsLen + 1, params)
+        for i = paramsLen + addParamsLen + 1, #params do
+            params[i] = nil
+        end
+        return f(table.unpack(params))
+    end
+end
+
 return functional
