@@ -1,12 +1,12 @@
 local string = string
 local utf8 = utf8
 
-function string.isEmptyOrNil(str)
+function string.isempty(str)
     return str == nil or str == ""
 end
 
 ---@param str string
-function string.toTable(str)
+function string.totable(str)
     --- 字符的第一个字节范围：0x00-0x7F, 0xC2-0xFD. ( 0-127, 194-253 )
     --- 字符的后续字节范围：0x80-0xBF. ( 128-191 )
     --- 字符的第一个字节必须以 0 / 110 / 1110 / 11110 开头，后续字节必须以 10 开头。

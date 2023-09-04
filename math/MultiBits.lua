@@ -13,11 +13,11 @@ local UNIT_LENGTH = 64
 local ZERO = 0x00
 local ONE = 0x01
 
-local function getUnitIndex(index)
+local function GetUnitIndex(index)
     return index // UNIT_LENGTH + (index % UNIT_LENGTH == 0 and 0 or 1)
 end
 
-local function getUnitOffset(index)
+local function GetUnitOffset(index)
     local offset = index % UNIT_LENGTH
     return offset == 0 and UNIT_LENGTH or offset
 end
@@ -26,7 +26,7 @@ end
 function MultiBits:init(length)
     assert(length > 0, "length must be positive.")
     self.length = length
-    self.unitCount = getUnitIndex(length)
+    self.unitCount = GetUnitIndex(length)
 
     self._units = {}
     for i = 1, self.unitCount do
@@ -44,8 +44,8 @@ end
 
 function MultiBits:Get(index)
     index = index - 1
-    local unitIndex = getUnitIndex(index)
-    local unitOffset = getUnitOffset(index)
+    local unitIndex = GetUnitIndex(index)
+    local unitOffset = GetUnitOffset(index)
 
     local unit = self._units[unitIndex]
     return ((unit & (ONE << unitOffset)) >> unitOffset) == 1
@@ -53,8 +53,8 @@ end
 
 function MultiBits:Set(index)
     index = index - 1
-    local unitIndex = getUnitIndex(index)
-    local unitOffset = getUnitOffset(index)
+    local unitIndex = GetUnitIndex(index)
+    local unitOffset = GetUnitOffset(index)
 
     local unit = self._units[unitIndex]
     unit = unit | (ONE << unitOffset)
@@ -63,8 +63,8 @@ end
 
 function MultiBits:Clear(index)
     index = index - 1
-    local unitIndex = getUnitIndex(index)
-    local unitOffset = getUnitOffset(index)
+    local unitIndex = GetUnitIndex(index)
+    local unitOffset = GetUnitOffset(index)
 
     local unit = self._units[unitIndex]
     unit = unit & (~(ONE << unitOffset))

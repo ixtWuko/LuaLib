@@ -7,35 +7,35 @@ local math = math
 local functional = {}
 
 --region Type
-function functional.isNil(value)
+function functional.isnil(value)
     return type(value) == 'nil'
 end
 
-function functional.isBoolean(value)
+function functional.isboolean(value)
     return type(value) == 'boolean'
 end
 
-function functional.isNumber(value)
+function functional.isnumber(value)
     return type(value) == 'number'
 end
 
-function functional.isInt(value)
+function functional.isint(value)
     return math.type(value) == 'integer'
 end
 
-function functional.isFloat(value)
+function functional.isfloat(value)
     return math.type(value) == 'float'
 end
 
-function functional.isString(value)
+function functional.isstring(value)
     return type(value) == 'string'
 end
 
-function functional.isFunction(value)
+function functional.isfunction(value)
     return type(value) == 'function'
 end
 
-function functional.isTable(value)
+function functional.istable(value)
     return type(value) == 'table'
 end
 

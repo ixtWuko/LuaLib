@@ -6,7 +6,7 @@ local assert = assert
 local type = type
 local tostring = tostring
 
-function table.isEmpty(tb)
+function table.isempty(tb)
     return not next(tb)
 end
 

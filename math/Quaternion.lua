@@ -18,14 +18,14 @@ function Quaternion.new(x, y, z, w)
     return setmetatable({x = x or 0, y = y or 0, z = z or 0, w = w or 0}, Quaternion)
 end
 
-function Quaternion.isQuaternion(q)
+function Quaternion.IsQuaternion(q)
     return getmetatable(q) == Quaternion
 end
 
 local new = Quaternion.new
-local isQuaternion = Quaternion.isQuaternion
+local IsQuaternion = Quaternion.IsQuaternion
 
-function Quaternion.fromEulerAngle(yaw, pitch, roll)
+function Quaternion.FromEulerAngle(yaw, pitch, roll)
     local half_yaw_rad = yaw * deg2rad * 0.5
     local half_pitch_rad = pitch * deg2rad * 0.5
     local half_roll_rad = roll * deg2rad * 0.5
@@ -46,7 +46,7 @@ function Quaternion.fromEulerAngle(yaw, pitch, roll)
 end
 
 ---@return number yaw, pitch, roll
-function Quaternion.toEulerAngle(q)
+function Quaternion.ToEulerAngle(q)
     local x, y, z, w = q.x, q.y, q.z, q.w
     local a = atan2(2 * (w * z + x * y), 1 - 2 * (y * y + z * z))
     local b = asin(2 * (w * y - x * z))
@@ -56,7 +56,7 @@ end
 
 ---@param axis Vector3
 ---@param angle number
-function Quaternion.fromRotation(axis, angle)
+function Quaternion.FromRotation(axis, angle)
     local half_angle_rad = angle * deg2rad * 0.5
     local s = sin(half_angle_rad)
     local c = cos(half_angle_rad)
@@ -64,7 +64,7 @@ function Quaternion.fromRotation(axis, angle)
 end
 
 ---@return Vector3, number
-function Quaternion.toRotation(q)
+function Quaternion.ToRotation(q)
     local half_angle = acos(q.w)
     local s = sin(half_angle)
     return Vector3.new(q.x / s, q.y / s, q.z / s), 2 * half_angle * rad2deg
@@ -88,7 +88,7 @@ function Quaternion.__mul(lhs, rhs)
     elseif type(rhs) == 'number' then
         return new(lhs.x * rhs, lhs.y * rhs, lhs.z * rhs, lhs.w * rhs)
     else
-        assert(isQuaternion(lhs) and isQuaternion(rhs), "Quaternion.__mul: arguments must be Quaternion or number.")
+        assert(IsQuaternion(lhs) and IsQuaternion(rhs), "Quaternion.__mul: arguments must be Quaternion or number.")
         local lx, ly, lz, lw = lhs.x, lhs.y, lhs.z, lhs.w
         local rx, ry, rz, rw = rhs.x, rhs.y, rhs.z, rhs.w
         return new(
@@ -101,28 +101,28 @@ function Quaternion.__mul(lhs, rhs)
 end
 
 function Quaternion.__div(lhs, rhs)
-    assert(isQuaternion(lhs) and type(rhs) == 'number', "Quaternion.__div: arguments must be Quaternion and number.")
+    assert(IsQuaternion(lhs) and type(rhs) == 'number', "Quaternion.__div: arguments must be Quaternion and number.")
     return new(lhs.x / rhs, lhs.y / rhs, lhs.z / rhs, lhs.w / rhs)
 end
 
-function Quaternion.conjugate(q)
+function Quaternion.Conjugate(q)
     return new(-q.x, -q.y, -q.z, q.w)
 end
 
-function Quaternion.length(q)
+function Quaternion.Length(q)
     return sqrt(q.x * q.x + q.y * q.y + q.z * q.z + q.w * q.w)
 end
 
-function Quaternion.inverse(q)
+function Quaternion.Inverse(q)
     local s = q.x * q.x + q.y * q.y + q.z * q.z + q.w * q.w
     return new(-q.x / s, -q.y / s, -q.z / s, q.w / s)
 end
 
 ---@param point Vector3
 ---@return Vector3
-function Quaternion.rotate(q, point)
+function Quaternion.Rotate(q, point)
     local ori = new(point.x, point.y, point.z, 0)
-    local ret = q * ori * Quaternion.inverse(q)
+    local ret = q * ori * Quaternion.Inverse(q)
     return Vector3.new(ret.x, ret.y, ret.z)
 end
 

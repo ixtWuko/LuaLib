@@ -65,7 +65,7 @@ function Bits.__tostring(bits)
     return string.reverse(table.concat(ret))
 end
 
-function Bits:toHex()
+function Bits:ToHex()
     return string.format("%016X", self._bits)
 end
 
