@@ -7,25 +7,25 @@ function Dequeue:init(initial_elements)
     self._tail = #self._data + 1
 end
 
-function Dequeue:isEmpty()
+function Dequeue:IsEmpty()
     return self._tail == self._head
 end
 
-function Dequeue:length()
+function Dequeue:Length()
     return self._tail - self._head
 end
 
-function Dequeue:putLeft(element)
+function Dequeue:PutLeft(element)
     self._head = self._head - 1
     self._data[self._head] = element
 end
 
-function Dequeue:putRight(element)
+function Dequeue:PutRight(element)
     self._data[self._tail] = element
     self._tail = self._tail + 1
 end
 
-function Dequeue:getLeft()
+function Dequeue:GetLeft()
     if self._tail == self._head then
         return nil
     end
@@ -35,7 +35,7 @@ function Dequeue:getLeft()
     return ret
 end
 
-function Dequeue:getRight()
+function Dequeue:GetRight()
     if self._tail == self._head then
         return nil
     end
@@ -45,7 +45,7 @@ function Dequeue:getRight()
     return ret
 end
 
-function Dequeue:clear()
+function Dequeue:Clear()
     self:init()
 end
 

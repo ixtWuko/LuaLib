@@ -1,5 +1,5 @@
----@class Queue.lua
-local Queue = class('Queue.lua')
+---@class Queue
+local Queue = class('Queue')
 
 function Queue:init(initial_elements)
     self._data = initial_elements or {}
@@ -7,20 +7,20 @@ function Queue:init(initial_elements)
     self._tail = #self._data + 1
 end
 
-function Queue:isEmpty()
+function Queue:IsEmpty()
     return self._tail == self._head
 end
 
-function Queue:length()
+function Queue:Length()
     return self._tail - self._head
 end
 
-function Queue:put(element)
+function Queue:Put(element)
     self._data[self._tail] = element
     self._tail = self._tail + 1
 end
 
-function Queue:get()
+function Queue:Get()
     if self._tail == self._head then
         return nil
     end
@@ -30,7 +30,7 @@ function Queue:get()
     return ret
 end
 
-function Queue:clear()
+function Queue:Clear()
     self:init()
 end
 

@@ -6,20 +6,20 @@ function Stack:init(initial_elements)
     self._top = #self._data
 end
 
-function Stack:isEmpty()
+function Stack:IsEmpty()
     return self._top == 0
 end
 
-function Stack:length()
+function Stack:Length()
     return self._top
 end
 
-function Stack:push(element)
+function Stack:Push(element)
     self._top = self._top + 1
     self._data[self._top] = element
 end
 
-function Stack:pop()
+function Stack:Pop()
     if self.top == 0 then
         return nil
     end
@@ -29,7 +29,7 @@ function Stack:pop()
     return ret
 end
 
-function Stack:clear()
+function Stack:Clear()
     self:init()
 end
 

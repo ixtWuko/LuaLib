@@ -12,7 +12,7 @@ end
 ---@field prev DoubleLinkedListNode
 
 ---@return DoubleLinkedListNode
-function DoubleLinkedList.new_node(value)
+function DoubleLinkedList.NewNode(value)
     return {
         value = value,
         next = nil,
@@ -22,7 +22,7 @@ end
 
 ---@param pos DoubleLinkedListNode
 ---@param node DoubleLinkedListNode
-function DoubleLinkedList:insert(pos, node)
+function DoubleLinkedList:Insert(pos, node)
     if self._head == pos then
         self._head = node
     else
@@ -33,7 +33,7 @@ function DoubleLinkedList:insert(pos, node)
     pos.prev = node
 end
 
-function DoubleLinkedList:insert_head(node)
+function DoubleLinkedList:InsertHead(node)
     if not self._head then
         self._head = node
         self._tail = node
@@ -44,7 +44,7 @@ function DoubleLinkedList:insert_head(node)
     self._head = node
 end
 
-function DoubleLinkedList:insert_tail(node)
+function DoubleLinkedList:InsertTail(node)
     if not self._tail then
         self._head = node
         self._tail = node
@@ -55,7 +55,7 @@ function DoubleLinkedList:insert_tail(node)
     self._tail = node
 end
 
-function DoubleLinkedList:remove(node)
+function DoubleLinkedList:Remove(node)
     if self._head == node then
         self._head = node.next
     else
@@ -69,7 +69,7 @@ function DoubleLinkedList:remove(node)
     return node
 end
 
-function DoubleLinkedList:remove_head()
+function DoubleLinkedList:RemoveHead()
     if self._head then
         local node = self._head
         local next = self._head.next
@@ -82,7 +82,7 @@ function DoubleLinkedList:remove_head()
     end
 end
 
-function DoubleLinkedList:remove_tail()
+function DoubleLinkedList:RemoveTail()
     if self._tail then
         local node = self._tail
         local prev = self._tail.prev
@@ -95,7 +95,7 @@ function DoubleLinkedList:remove_tail()
     end
 end
 
-function DoubleLinkedList:find(value)
+function DoubleLinkedList:Find(value)
     local cur = self._head
     while cur do
         if cur.value == value then
@@ -105,7 +105,7 @@ function DoubleLinkedList:find(value)
     end
 end
 
-function DoubleLinkedList:reverse_find(value)
+function DoubleLinkedList:ReverseFind(value)
     local cur = self._tail
     while cur do
         if cur.value == value then

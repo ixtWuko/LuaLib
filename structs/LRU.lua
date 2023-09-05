@@ -1,4 +1,4 @@
-local DoubleLinkedList = require("src.common.Algo.DoubleLinkedList")
+local DoubleLinkedList = require("structs.DoubleLinkedList")
 
 ---@class LRU
 ---@field cache table @<key, node>
@@ -12,23 +12,23 @@ function LRU:init(capacity)
     self.order = DoubleLinkedList.new()
 end
 
-function LRU:put(key, value)
+function LRU:Put(key, value)
     if self.capacity == 0 then
-        local removeNode = self.order:remove_tail().value
+        local removeNode = self.order:RemoveTail().value
         self.cache[removeNode.key] = nil
         self.capacity = self.capacity + 1
     end
     self.capacity = self.capacity - 1
-    local addedNode = DoubleLinkedList.new_node({ key = key, value = value })
-    self.order:insert_head(addedNode)
+    local addedNode = DoubleLinkedList.NewNode({ key = key, value = value })
+    self.order:InsertHead(addedNode)
     self.cache[key] = addedNode
 end
 
-function LRU:get(key)
+function LRU:Get(key)
     local node = self.cache[key]
     if node then
-        self.order:remove(node)
-        self.order:insert_head(node)
+        self.order:Remove(node)
+        self.order:InsertHead(node)
         return node.value.value
     end
 end

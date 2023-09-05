@@ -13,7 +13,7 @@ function Set:init(initial_elements)
     end
 end
 
-function Set.union(sa, sb)
+function Set.Union(sa, sb)
     local ret = Set.new()
     for k, _ in pairs(sa) do
         ret[k] = true
@@ -24,7 +24,7 @@ function Set.union(sa, sb)
     return ret
 end
 
-function Set.difference(sa, sb)
+function Set.Difference(sa, sb)
     local ret = Set.new()
     for k, _ in pairs(sa) do
         ret[k] = true
@@ -35,9 +35,9 @@ function Set.difference(sa, sb)
     return ret
 end
 
-function Set.interaction(sa, sb)
-    local diff = Set.difference(sa, sb)
-    return Set.difference(sa, diff)
+function Set.Interaction(sa, sb)
+    local diff = Set.Difference(sa, sb)
+    return Set.Difference(sa, diff)
 end
 
 return Set

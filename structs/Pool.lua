@@ -9,7 +9,7 @@ function Pool:init(object, capacity)
     self.capacity = capacity
 end
 
-function Pool:take(...)
+function Pool:Take(...)
     local len = #self._pool
     if len > 0 then
         local object = self._pool[len]
@@ -20,7 +20,7 @@ function Pool:take(...)
     return self.object.new(...)
 end
 
-function Pool:free(object)
+function Pool:Free(object)
     assert(object.__className == self.object.__className, "Wrong Type！")
     local len = #self._pool
     if len < self.capacity then
