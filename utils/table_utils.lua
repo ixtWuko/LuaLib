@@ -11,11 +11,7 @@ function table.isempty(tb)
 end
 
 function table.ilength(tb)
-    local len = 0
-    for _ in ipairs(tb) do
-        len = len + 1
-    end
-    return len
+    return #tb
 end
 
 function table.length(tb)
@@ -68,6 +64,14 @@ function table.merge(ta, tb)
     for k, v in pairs(tb) do
         ret[k] = v
     end
+end
+
+function table.makemap(tb)
+    local ret = {}
+    for _, v in ipairs(tb) do
+        ret[v] = true
+    end
+    return ret
 end
 
 --region table.dump
