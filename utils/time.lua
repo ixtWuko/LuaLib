@@ -6,7 +6,7 @@ function time.GetTimestampInSecond()
     return math.floor(socket.gettime())
 end
 
-function time.GetTimestampInMillisecond()
+function time.GetTimestamp()
     return math.floor(socket.gettime() * 1000)
 end
 
