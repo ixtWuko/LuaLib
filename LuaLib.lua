@@ -1,5 +1,5 @@
 --- global
-require("utils.table_utils")
-require("utils.string_utils")
+require("utils.table_ext")
+require("utils.string_ext")
 class = require("types.class")
 enum = require("types.enum")
