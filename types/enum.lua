@@ -1,48 +1,26 @@
---- local ENUM_SAMPLE = enum {
----     FIRST_NAME = 1,
----     SECOND_NAME = 2,
----     THIRD_NAME = 3,
---- }
+--[[ Sample:
+local ENUM_SAMPLE = enum {
+     FIRST_NAME = 1,
+     SECOND_NAME = 2,
+     THIRD_NAME = 3,
+}
+]]--
 
-
-local random_string = require("utils.random_string")
-
-local private = setmetatable({}, { __mode = "k" })
-
-local ENUM_ID_LENGTH = 8
-local EnumIdGenerator
-EnumIdGenerator = function()
-    local id = random_string.SimpleRandom(ENUM_ID_LENGTH)
-    if not private[id] then
-        return id
-    end
-    return EnumIdGenerator()
+local __newindex = function()
+    assert(false, "modification of enum is forbidden.")
 end
 
-local enum_metatable = {
-    __index = function(enumId, key)
-        local storage = private[enumId]
-        return storage[key]
-    end,
-    __newindex = function()
-        assert(false, "enum modification forbidden.")
-    end,
-    __tostring = function(enumId)
-        return "enum: " .. enumId
-    end,
-    __metatable = "enum"
-}
-
-local function enum(nameTable)
+local enum = function(nameTable)
     assert(type(nameTable) == "table", "enum MUST be a table.")
     for name in pairs(nameTable) do
         assert(type(name) == "string", "enum name MUST be a string")
     end
 
-    local enumId = EnumIdGenerator()
-    private[enumId] = nameTable
-    debug.setmetatable(enumId, enum_metatable)
-    return enumId
+    nameTable.__index = nameTable
+    nameTable.__newindex = __newindex
+    nameTable.__metatable = "enum"
+    local enum_object = setmetatable({}, nameTable)
+    return enum_object
 end
 
 return enum
