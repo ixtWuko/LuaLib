@@ -31,7 +31,7 @@ function random_string.TimestampRandom(length, characters)
         chars = characters
         charsAmount = #characters
     end
-    local timestamp = string.format("%x", time.GetTimestampInMillisecond())
+    local timestamp = string.format("%x", time.GetTimestamp())
     local timestampLength = #timestamp
     assert(length > timestampLength, "the parameter 'length' should be greater than " .. timestampLength)
     local remainLength = length - timestampLength
@@ -47,7 +47,7 @@ local MachineIdLength = 10
 local RandomPartLength = 12
 local RandomPartMax = 2 ^ RandomPartLength - 1
 function random_string.SnowFlake(machineId)
-    local timestamp = time.GetTimestampInMillisecond()
+    local timestamp = time.GetTimestamp()
     local random = math.random(0, RandomPartMax)
     local ret = (timestamp  << (MachineIdLength + RandomPartLength)) +
                 (machineId << RandomPartLength) + random

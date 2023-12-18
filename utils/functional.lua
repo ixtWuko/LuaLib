@@ -6,89 +6,57 @@ local math = math
 
 local functional = {}
 
---region Type
-function functional.isnil(value)
-    return type(value) == 'nil'
-end
 
-function functional.isboolean(value)
-    return type(value) == 'boolean'
-end
+functional.isnil = function(value) return type(value) == 'nil' end
+functional.isboolean = function(value) return type(value) == 'boolean' end
+functional.isnumber = function(value) return type(value) == 'number' end
+functional.isstring = function(value) return type(value) == 'string' end
+functional.isfunction = function(value) return type(value) == 'function' end
+functional.istable = function(value) return type(value) == 'table' end
+functional.isuserdata = function(value) return type(value) == 'userdata' end
+functional.isint = function(value) return math.type(value) == 'integer' end
+functional.isfloat = function(value) return math.type(value) == 'float' end
 
-function functional.isnumber(value)
-    return type(value) == 'number'
-end
-
-function functional.isint(value)
-    return math.type(value) == 'integer'
-end
-
-function functional.isfloat(value)
-    return math.type(value) == 'float'
-end
-
-function functional.isstring(value)
-    return type(value) == 'string'
-end
-
-function functional.isfunction(value)
-    return type(value) == 'function'
-end
-
-function functional.istable(value)
-    return type(value) == 'table'
-end
-
-function functional.callable(value)
-    if type(value) == "table" then
+functional.callable = function(value)
+    if type(value) == 'table' then
         local metatable = getmetatable(value)
-        return metatable and type(metatable.__call) == "function"
+        return metatable and type(metatable.__call) == 'function'
     end
     return type(value) == 'function'
 end
---endregion Type
 
 
---region Logic
-function functional.land(va, vb)
-    return va and vb and true or false
-end
+functional.land = function(va, vb) return va and vb and true or false end
+functional.lor = function(va, vb) return (va or vb) and true or false end
+functional.lnot = function(value) return not value end
+functional.lxor = function(va, vb) return (va and not vb) or (vb and not va) or false end
 
-function functional.lor(va, vb)
-    return (va or vb) and true or false
-end
-
-function functional.lnot(value)
-    return not value
-end
-
-function functional.lxor(va, vb)
-    return (va and not vb) or (vb and not va) or false
-end
---endregion Logic
-
-
---region Table
-function functional.head(array)
-    return array[1]
-end
-
-function functional.tail(array)
-    return array[#array]
-end
-
-function functional.reverse(array)
-    local ret = {}
-    local len = #array
-    if len > 0 then
-        for i = #array, 1 do
-            tinsert(ret, array[i])
-        end
+functional.all = function(array)
+    for _, v in ipairs(array) do
+        if not v then return false end
     end
-    return ret
+    return true
 end
 
-function functional.take(count, array)
+functional.any = function(array)
+    for _, v in ipairs(array) do
+        if v then return true end
+    end
+    return false
+end
+
+functional.none = function(array)
+    for _, v in ipairs(array) do
+        if v then return false end
+    end
+    return true
+end
+
+
+functional.head = function(array) return array[1] end
+functional.tail = function(array) return array[#array] end
+
+functional.take = function(count, array)
     local ret = {}
     if count > 0 then
         for i = 1, count do
@@ -98,10 +66,10 @@ function functional.take(count, array)
     return ret
 end
 
-function functional.drop(count, array)
-    count = count + 1
+functional.drop = function(count, array)
     local ret = {}
     local len = #array
+    count = count + 1
     if count < len then
         for i = count, len do
             tinsert(ret, array[i])
@@ -109,42 +77,31 @@ function functional.drop(count, array)
     end
     return ret
 end
---endregion Table
 
-function functional.contain(array, value)
+functional.reverse = function(array)
+    local ret = {}
+    local len = #array
+    if len > 0 then
+        for i = len, 1 do
+            tinsert(ret, array[i])
+        end
+    end
+    return ret
+end
+
+functional.contain = function(array, value)
     for _, v in ipairs(array) do
         if v == value then return true end
     end
 end
 
-function functional.where(array, value)
+functional.where = function(array, value)
     for i, v in ipairs(array) do
         if v == value then return i end
     end
 end
 
-function functional.all(array)
-    for _, v in ipairs(array) do
-        if not v then return false end
-    end
-    return true
-end
-
-function functional.any(array)
-    for _, v in ipairs(array) do
-        if v then return true end
-    end
-    return false
-end
-
-function functional.none(array)
-    for _, v in ipairs(array) do
-        if v then return false end
-    end
-    return true
-end
-
-function functional.mininum(array)
+functional.mininum = function(array)
     local len = #array
     if len > 1 then
         local min = array[1]
@@ -159,7 +116,7 @@ function functional.mininum(array)
     end
 end
 
-function functional.maxinum(array)
+functional.maxinum = function(array)
     local len = #array
     if len > 1 then
         local max = array[1]
@@ -174,7 +131,7 @@ function functional.maxinum(array)
     end
 end
 
-function functional.sum(array)
+functional.sum = function(array)
     local ret = 0
     for _, v in ipairs(array) do
         ret = ret + v
@@ -182,21 +139,21 @@ function functional.sum(array)
     return ret
 end
 
-function functional.product(array)
-    local ret = #array > 0 and 1 or 0
+functional.product = function(array)
+    local ret = 1
     for _, v in ipairs(array) do
         ret = ret * v
     end
     return ret
 end
 
-function functional.merge(tab, addon)
+functional.merge = function(array, addon)
     for _, v in ipairs(addon) do
-        tinsert(tab, v)
+        tinsert(array, v)
     end
 end
 
-function functional.repeats(count, value)
+functional.repeats = function(count, value)
     local ret = {}
     for _ = 1, count do
         tinsert(ret, value)
@@ -204,7 +161,7 @@ function functional.repeats(count, value)
     return ret
 end
 
-function functional.cycles(count, array)
+functional.cycles = function(count, array)
     local ret = {}
     for _ = 1, count do
         functional.merge(ret, array)
@@ -212,7 +169,7 @@ function functional.cycles(count, array)
     return ret
 end
 
-function functional.map(array, func)
+functional.map = function(array, func)
     local ret = {}
     for i, v in ipairs(array) do
         ret[i] = func(v)
@@ -220,7 +177,7 @@ function functional.map(array, func)
     return ret
 end
 
-function functional.filter(array, func)
+functional.filter = function(array, func)
     local ret = {}
     for _, v in ipairs(array) do
         if func(v) then
@@ -230,14 +187,14 @@ function functional.filter(array, func)
     return ret
 end
 
-function functional.reduce(array, func, state)
+functional.reduce = function(array, func, state)
     for _, v in ipairs(array) do
         state = func(state, v)
     end
     return state
 end
 
-function functional.reverse_ipairs(array)
+functional.reverse_ipairs = function(array)
     local iter = function(array, index)
         index = index - 1
         local value = array[index]
@@ -253,14 +210,14 @@ end
 
 ---@param f function
 ---@param g function
-function functional.compose(f, g)
+functional.compose = function(f, g)
     return function(...)
         return f(g(...))
     end
 end
 
 ---@param f function
-function functional.curry(f, ...)
+functional.curry = function(f, ...)
     local params = { ... }
     local paramsLen = #params
     return function(...)
