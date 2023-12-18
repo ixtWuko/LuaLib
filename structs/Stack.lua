@@ -20,12 +20,13 @@ function Stack:Push(element)
 end
 
 function Stack:Pop()
-    if self.top == 0 then
+    local top = self.top
+    if top == 0 then
         return nil
     end
-    local ret = self._data[self._top]
-    self._data[self._top] = nil
-    self._top = self._top - 1
+    local ret = self._data[top]
+    self._data[top] = nil
+    self._top = top - 1
     return ret
 end
 

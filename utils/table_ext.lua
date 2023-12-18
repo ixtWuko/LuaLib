@@ -9,12 +9,12 @@ local _insert_empty = function(str, depth)
 end
 
 local _dump
-_dump = function(tb, str, curDepth)
-    if type(tb) == 'table' then
+_dump = function(tbl, str, curDepth)
+    if type(tbl) == 'table' then
         _insert(str, "\n")
         _insert_empty(str, curDepth)
         _insert(str, "{\n")
-        for k, v in pairs(tb) do
+        for k, v in pairs(tbl) do
             _insert_empty(str, curDepth + 1)
             _insert(str, tostring(k))
             _insert(str, " = ")
@@ -23,33 +23,33 @@ _dump = function(tb, str, curDepth)
         _insert_empty(str, curDepth)
         _insert(str, "}\n")
     else
-        _insert(str, tostring(tb))
+        _insert(str, tostring(tbl))
         _insert(str, ",\n")
     end
 end
 
-table.dump = function(tb)
+function table.dump(tbl)
     local strTable = {}
-    _dump(tb, strTable, 0)
+    _dump(tbl, strTable, 0)
     return table.concat(strTable)
 end
 
 
-table.isempty = function(tb)
-    return not next(tb)
+function table.isempty(tbl)
+    return not next(tbl)
 end
 
-table.copy = function(tb)
-    assert(type(tb) == 'table', "parameter must be a table!")
+function table.copy(tbl)
+    assert(type(tbl) == 'table', "parameter must be a table!")
     local ret = {}
-    for k, v in pairs(tb) do
+    for k, v in pairs(tbl) do
         ret[k] = v
     end
-    setmetatable(ret, getmetatable(tb))
+    setmetatable(ret, getmetatable(tbl))
     return ret
 end
 
-table.merge = function(ta, tb)
+function table.merge(ta, tb)
     local ret = {}
     for k, v in pairs(tb) do
         ret[k] = v
@@ -60,9 +60,9 @@ table.merge = function(ta, tb)
     return ret
 end
 
-table.makemap = function(list)
+function table.makemap(array)
     local ret = {}
-    for i, v in ipairs(list) do
+    for i, v in ipairs(array) do
         ret[v] = i
     end
     return ret

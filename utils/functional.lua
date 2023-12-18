@@ -7,17 +7,17 @@ local math = math
 local functional = {}
 
 
-functional.isnil = function(value) return type(value) == 'nil' end
-functional.isboolean = function(value) return type(value) == 'boolean' end
-functional.isnumber = function(value) return type(value) == 'number' end
-functional.isstring = function(value) return type(value) == 'string' end
-functional.isfunction = function(value) return type(value) == 'function' end
-functional.istable = function(value) return type(value) == 'table' end
-functional.isuserdata = function(value) return type(value) == 'userdata' end
-functional.isint = function(value) return math.type(value) == 'integer' end
-functional.isfloat = function(value) return math.type(value) == 'float' end
+function functional.isnil(value) return type(value) == 'nil' end
+function functional.isboolean(value) return type(value) == 'boolean' end
+function functional.isnumber(value) return type(value) == 'number' end
+function functional.isstring(value) return type(value) == 'string' end
+function functional.isfunction(value) return type(value) == 'function' end
+function functional.istable(value) return type(value) == 'table' end
+function functional.isuserdata(value) return type(value) == 'userdata' end
+function functional.isint(value) return math.type(value) == 'integer' end
+function functional.isfloat(value) return math.type(value) == 'float' end
 
-functional.callable = function(value)
+function functional.callable(value)
     if type(value) == 'table' then
         local metatable = getmetatable(value)
         return metatable and type(metatable.__call) == 'function'
@@ -26,26 +26,26 @@ functional.callable = function(value)
 end
 
 
-functional.land = function(va, vb) return va and vb and true or false end
-functional.lor = function(va, vb) return (va or vb) and true or false end
-functional.lnot = function(value) return not value end
-functional.lxor = function(va, vb) return (va and not vb) or (vb and not va) or false end
+function functional.land(va, vb) return va and vb and true or false end
+function functional.lor(va, vb) return (va or vb) and true or false end
+function functional.lnot(value) return not value end
+function functional.lxor(va, vb) return (va and not vb) or (vb and not va) or false end
 
-functional.all = function(array)
+function functional.all(array)
     for _, v in ipairs(array) do
         if not v then return false end
     end
     return true
 end
 
-functional.any = function(array)
+function functional.any(array)
     for _, v in ipairs(array) do
         if v then return true end
     end
     return false
 end
 
-functional.none = function(array)
+function functional.none(array)
     for _, v in ipairs(array) do
         if v then return false end
     end
@@ -53,10 +53,10 @@ functional.none = function(array)
 end
 
 
-functional.head = function(array) return array[1] end
-functional.tail = function(array) return array[#array] end
+function functional.head(array) return array[1] end
+function functional.tail(array) return array[#array] end
 
-functional.take = function(count, array)
+function functional.take(count, array)
     local ret = {}
     if count > 0 then
         for i = 1, count do
@@ -66,7 +66,7 @@ functional.take = function(count, array)
     return ret
 end
 
-functional.drop = function(count, array)
+function functional.drop(count, array)
     local ret = {}
     local len = #array
     count = count + 1
@@ -78,7 +78,7 @@ functional.drop = function(count, array)
     return ret
 end
 
-functional.reverse = function(array)
+function functional.reverse(array)
     local ret = {}
     local len = #array
     if len > 0 then
@@ -89,19 +89,19 @@ functional.reverse = function(array)
     return ret
 end
 
-functional.contain = function(array, value)
+function functional.contain(array, value)
     for _, v in ipairs(array) do
         if v == value then return true end
     end
 end
 
-functional.where = function(array, value)
+function functional.where(array, value)
     for i, v in ipairs(array) do
         if v == value then return i end
     end
 end
 
-functional.mininum = function(array)
+function functional.mininum(array)
     local len = #array
     if len > 1 then
         local min = array[1]
@@ -116,7 +116,7 @@ functional.mininum = function(array)
     end
 end
 
-functional.maxinum = function(array)
+function functional.maxinum(array)
     local len = #array
     if len > 1 then
         local max = array[1]
@@ -131,7 +131,7 @@ functional.maxinum = function(array)
     end
 end
 
-functional.sum = function(array)
+function functional.sum(array)
     local ret = 0
     for _, v in ipairs(array) do
         ret = ret + v
@@ -139,7 +139,7 @@ functional.sum = function(array)
     return ret
 end
 
-functional.product = function(array)
+function functional.product(array)
     local ret = 1
     for _, v in ipairs(array) do
         ret = ret * v
@@ -147,13 +147,13 @@ functional.product = function(array)
     return ret
 end
 
-functional.merge = function(array, addon)
+function functional.merge(array, addon)
     for _, v in ipairs(addon) do
         tinsert(array, v)
     end
 end
 
-functional.repeats = function(count, value)
+function functional.repeats(count, value)
     local ret = {}
     for _ = 1, count do
         tinsert(ret, value)
@@ -161,7 +161,7 @@ functional.repeats = function(count, value)
     return ret
 end
 
-functional.cycles = function(count, array)
+function functional.cycles(count, array)
     local ret = {}
     for _ = 1, count do
         functional.merge(ret, array)
@@ -169,7 +169,7 @@ functional.cycles = function(count, array)
     return ret
 end
 
-functional.map = function(array, func)
+function functional.map(array, func)
     local ret = {}
     for i, v in ipairs(array) do
         ret[i] = func(v)
@@ -177,7 +177,7 @@ functional.map = function(array, func)
     return ret
 end
 
-functional.filter = function(array, func)
+function functional.filter(array, func)
     local ret = {}
     for _, v in ipairs(array) do
         if func(v) then
@@ -187,14 +187,14 @@ functional.filter = function(array, func)
     return ret
 end
 
-functional.reduce = function(array, func, state)
+function functional.reduce(array, func, state)
     for _, v in ipairs(array) do
         state = func(state, v)
     end
     return state
 end
 
-functional.reverse_ipairs = function(array)
+function functional.reverse_ipairs(array)
     local iter = function(array, index)
         index = index - 1
         local value = array[index]
@@ -210,14 +210,14 @@ end
 
 ---@param f function
 ---@param g function
-functional.compose = function(f, g)
+function functional.compose(f, g)
     return function(...)
         return f(g(...))
     end
 end
 
 ---@param f function
-functional.curry = function(f, ...)
+function functional.curry(f, ...)
     local params = { ... }
     local paramsLen = #params
     return function(...)
