@@ -1,4 +1,4 @@
-local DoubleLinkedList = require("structs.DoubleLinkedList")
+local DoubleLinkedList = require("LuaLib.structs.DoubleLinkedList")
 
 ---@class LRU
 ---@field cache table @<key, node>

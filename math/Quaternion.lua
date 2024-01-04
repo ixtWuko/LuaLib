@@ -8,7 +8,7 @@ local atan2 = math.atan2
 local deg2rad = math.pi / 180
 local rad2deg = 180 / math.pi
 local sqrt = math.sqrt
-local Vector3 = require("math.Vector3")
+local Vector3 = require("LuaLib.math.Vector3")
 
 ---@class Quaternion
 local Quaternion = {}

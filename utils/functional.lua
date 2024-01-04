@@ -1,6 +1,6 @@
 local type = type
 local getmetatable = getmetatable
-local ipairs, pairs = iparis, pairs
+local ipairs, pairs = ipairs, pairs
 local tinsert = table.insert
 local math = math
 
@@ -229,6 +229,14 @@ function functional.curry(f, ...)
         end
         return f(table.unpack(params))
     end
+end
+
+function functional.foreach(map, func)
+    local ret = {}
+    for k, v in ipairs(map) do
+        ret[k] = func(v)
+    end
+    return ret
 end
 
 return functional

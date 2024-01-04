@@ -1,4 +1,4 @@
-local time = require("utils.time")
+local time = require("LuaLib.utils.time")
 
 local random_string = {}
 

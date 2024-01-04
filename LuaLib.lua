@@ -1,5 +1,5 @@
 --- global
-require("utils.table_ext")
-require("utils.string_ext")
-class = require("types.class")
-enum = require("types.enum")
+require("LuaLib.utils.table_ext")
+require("LuaLib.utils.string_ext")
+class = require("LuaLib.types.class")
+enum = require("LuaLib.types.enum")
