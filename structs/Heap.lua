@@ -53,7 +53,7 @@ local function Sink(elements, index)
     end
 end
 
-function Heap:Insert(element)
+function Heap:Push(element)
     local length = self.length + 1
     self.length = length
     self.elements[length] = element
@@ -62,7 +62,7 @@ function Heap:Insert(element)
     end
 end
 
-function Heap:Remove()
+function Heap:Pop()
     local length = self.length
     self.elements[1] = self.elements[length]
     self.elements[length] = nil

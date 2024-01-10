@@ -39,6 +39,12 @@ function table.isempty(tbl)
     return not next(tbl)
 end
 
+function table.clear(tbl)
+    for k in pairs(tbl) do
+        tbl[k] = nil
+    end
+end
+
 function table.copy(tbl)
     assert(type(tbl) == 'table', "parameter must be a table!")
     local ret = {}
